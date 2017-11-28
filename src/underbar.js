@@ -122,7 +122,7 @@
       if (iterator) {
         arrayCopy[i] = iterator(array[i]);
       }
-      if (_.indexOf(result, arrayCopy[i]) === -1) {
+      if (_.indexOf(arrayCopy.slice(0, i), arrayCopy[i]) === -1) {
         result.push(array[i]);
       }
     }
@@ -137,9 +137,11 @@
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
     let result = [];
+    let collectionCopy = collection.slice();
     
+    _.each(collectionCopy, iterator);
 
-    
+    return collectionCopy;
   };
 
   /*
