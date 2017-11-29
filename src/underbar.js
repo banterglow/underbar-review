@@ -336,11 +336,22 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+
   _.memoize = function(func) {
     var alreadyCalled = {};
-    if (!alreadyCalled[func]) {
-      return func;
-    }
+  
+    return function() {
+      console.log(alreadyCalled);
+      var argumentCopy = Array.from(arguments);
+      // console.log(alreadyCalled[argumentCopy]);
+      if (alreadyCalled[JSON.stringify(argumentCopy)]) {
+        return alreadyCalled[JSON.stringify(argumentCopy)];
+      } else {
+        alreadyCalled[JSON.stringify(argumentCopy)] = func.apply(this, arguments); //(...argumentCopy); //also works
+        // console.log(alreadyCalled);
+        return alreadyCalled[JSON.stringify(argumentCopy)];
+      }
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
