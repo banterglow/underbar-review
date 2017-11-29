@@ -184,7 +184,7 @@
   _.reduce = function(collection, iterator, accumulator) {
     if (Array.isArray(collection)) {
       let i = 0;
-      if (typeof accumulator === 'undefined') {
+      if (accumulator === undefined) {
         accumulator = collection[0];
         i = 1;
       }
@@ -192,9 +192,10 @@
         accumulator = iterator(accumulator, collection[i]);
         i++;
       }
+
     } else if (typeof collection === 'object') {
-      if (typeof accumulator === 'undefined') {
-        var accumulator = collection[objKeys[0]];
+      if (accumulator === undefined) {
+        accumulator = collection[objKeys[0]];
       }
       var objKeys = Object.keys(collection); 
       for (var j = 0; j < objKeys.length; j++) {
@@ -220,7 +221,7 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    if (typeof iterator === 'undefined') {
+    if (iterator === undefined) {
       var iterator = function(x) {
         return x;
       };
@@ -236,7 +237,7 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
-    if (typeof iterator === 'undefined') {
+    if (iterator === undefined) {
       var iterator = function(x) {
         return x;
       };
@@ -287,7 +288,7 @@
     let result = obj;
     for (var i = 1; i < argumentArray.length; i++) {
       for (var key in argumentArray[i]) {
-        if (!result[key]) {
+        if (typeof result[key] === 'undefined') {
           result[key] = argumentArray[i][key];
         }
       }
@@ -336,6 +337,10 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var alreadyCalled = {};
+    if (!alreadyCalled[func]) {
+      return func;
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
